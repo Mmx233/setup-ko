@@ -9,6 +9,10 @@ jobs:
   use-action:
     name: Use Action
 
+    permissions:
+      contents: read
+      packages: write
+
     strategy:
       matrix:
         platform:
@@ -27,12 +31,12 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       # Minimal publish
-      - uses: ko-build/setup-ko@main
+      - uses: Mmx233/setup-ko@main
 
       - run: ko publish --bare ./
 
       - name: Install specific release
-        uses: ko-build/setup-ko@main
+        uses: Mmx233/setup-ko@main
         with:
           version: v0.16.0
 
@@ -40,7 +44,7 @@ jobs:
         run: ko version | grep 0.16.0
 
       - name: Install from tip
-        uses: ko-build/setup-ko@main
+        uses: Mmx233/setup-ko@main
         with:
           version: tip
 
@@ -49,7 +53,7 @@ jobs:
 
       # If KO_DOCKER_REPO is set during setup, it's set for future steps.
       - name: Pre-set KO_DOCKER_REPO
-        uses: ko-build/setup-ko@main
+        uses: Mmx233/setup-ko@main
         env:
           KO_DOCKER_REPO: already-set
 
